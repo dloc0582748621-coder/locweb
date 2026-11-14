@@ -141,4 +141,4 @@ Nên bám theo biểu giá nhà nước hiện hành. Hãy kiểm tra quy địn
 
 ---
 
-*Tài liệu này là bản mẫu. Hãy cập nhật đơn giá, ngày chốt số và thông tin liên hệ cho phù hợp với nhà trọ của bạn.*
+
