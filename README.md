@@ -32,7 +32,7 @@ Dự án giúp chủ trọ ghi chỉ số điện nước hằng tháng, tính t
 |---|---|---|
 | Đơn giá điện (đồng/kWh) | 3.500 |  bám theo quy định hiện hành tại địa phương |
 | Đơn giá nước (đồng/m³) | 15.000 | Hoặc mức khoán đồng/người |
-| Phí wifi (đồng/phòng) | 50.000 | Không bắt buộc |
+
 
 ### Bảng phòng
 
@@ -51,7 +51,6 @@ Dự án giúp chủ trọ ghi chỉ số điện nước hằng tháng, tính t
 | Mã phòng | Liên kết với bảng phòng |
 | Điện cũ / Điện mới | Chỉ số công tơ |
 | Nước cũ / Nước mới | Chỉ số đồng hồ nước |
-| Phí khác | Rác, wifi, gửi xe |
 | Trạng thái | Chưa thu / Đã thu / Thu thiếu |
 
 ## Công thức tính
