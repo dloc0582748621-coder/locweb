@@ -1,0 +1,15 @@
+THU MUC ANH SAN PHAM
+Bo anh that vao thu muc nay voi dung ten (duoi .jpg) nhu sau.
+Chua co anh nao thi website tu hien anh mau placeholder.svg.
+
+iphone-15-pro.jpg
+samsung-s24.jpg
+xiaomi-14.jpg
+oppo-reno-11.jpg
+macbook-air-m2.jpg
+dell-xps-13.jpg
+asus-tuf.jpg
+thinkpad-e14.jpg
+
+Neu anh cua ban co duoi .png hoac .webp: mo js/products.js, sua dong "anh:" cua san pham tuong ung.
+Nho ghi nguon anh trong bao cao (Tai lieu tham khao).
