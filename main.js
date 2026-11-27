@@ -29,8 +29,7 @@ function dungDauTrang() {
             '<input class="form-control form-control-sm" type="search" name="q" placeholder="Tìm điện thoại, laptop..." aria-label="Tìm kiếm">' +
             '<button class="btn btn-sm btn-warning ms-2" type="submit" aria-label="Tìm"><i class="fa-solid fa-magnifying-glass"></i></button>' +
           "</form>" +
-          '<a class="btn btn-primary" href="gio-hang.html"><i class="fa-solid fa-cart-shopping me-1"></i>Giỏ hàng ' +
-            '<span id="huyHieuGio" class="badge bg-warning text-dark ms-1">0</span></a>' +
+          '<span class="btn btn-primary disabled" aria-disabled="true"><i class="fa-solid fa-cart-shopping me-1"></i>Giỏ hàng</span>' +
           dungMucTaiKhoan() +
         "</div>" +
       "</div>" +
@@ -62,7 +61,7 @@ function dungChanTrang() {
             '<p class="small text-secondary">Cửa hàng điện thoại và laptop chính hãng. Giá tốt, bảo hành rõ ràng, giao hàng nhanh.</p></div>' +
           '<div class="col-6 col-md-4"><h3 class="h6">Liên kết</h3><ul class="list-unstyled small">' +
             '<li><a href="index.html">Trang chủ</a></li><li><a href="san-pham.html">Sản phẩm</a></li>' +
-            '<li><a href="gio-hang.html">Giỏ hàng</a></li><li><a href="dang-nhap.html">Đăng nhập</a></li><li><a href="lien-he.html">Liên hệ</a></li></ul></div>' +
+            '<li><a href="dang-nhap.html">Đăng nhập</a></li><li><a href="lien-he.html">Liên hệ</a></li></ul></div>' +
           '<div class="col-6 col-md-4"><h3 class="h6">Liên hệ</h3><ul class="list-unstyled small text-secondary">' +
             '<li><i class="fa-solid fa-location-dot me-2"></i>TP. Vinh, Nghệ An</li>' +
             '<li><i class="fa-solid fa-phone me-2"></i>0900 000 000</li>' +
@@ -164,11 +163,8 @@ function khoiTaoTrangChiTiet() {
       '<p class="text-secondary">' + p.mota + "</p>" +
       '<div class="gia fs-3 mb-1">' + tien(p.gia) + giaCu + "</div>" +
       '<div class="small mb-3">' + tinhTrang + "</div>" +
-      '<div class="d-flex align-items-center gap-2 mb-4">' +
-        '<label for="soLuong" class="form-label mb-0">Số lượng</label>' +
-        '<input type="number" id="soLuong" class="form-control" style="width:90px" min="1" max="10" value="1">' +
-        '<button type="button" class="btn btn-primary" id="nutThem"' + (p.tonKho > 0 ? "" : " disabled") + '>' +
-          '<i class="fa-solid fa-cart-plus me-1"></i>Thêm vào giỏ</button>' +
+      '<div class="mb-4">' +
+        '<span class="btn btn-primary disabled" aria-disabled="true"><i class="fa-solid fa-cart-plus me-1"></i>Thêm vào giỏ</span>' +
       "</div>" +
       '<h2 class="h5">Thông số nổi bật</h2>' +
       '<table class="table table-striped"><tbody>' + thongSo + "</tbody></table>" +
@@ -177,75 +173,8 @@ function khoiTaoTrangChiTiet() {
         '<li><i class="fa-solid fa-truck-fast me-2 text-primary"></i>Giao hàng nhanh toàn quốc</li></ul>' +
     "</div>";
 
-  const nutThem = document.getElementById("nutThem");
-  if (nutThem) {
-    nutThem.addEventListener("click", function () {
-      let sl = parseInt(document.getElementById("soLuong").value, 10);
-      if (isNaN(sl) || sl < 1) sl = 1;
-      if (sl > 10) sl = 10;
-      themVaoGio(p.id, sl);
-    });
-  }
-
   const lienQuan = SAN_PHAM.filter(function (x) { return x.loai === p.loai && x.id !== p.id; }).slice(0, 4);
   document.getElementById("spLienQuan").innerHTML = lienQuan.map(taoThe).join("");
-}
-
-/* ---------- 5. TRANG GIỎ HÀNG ---------- */
-function veGioHang() {
-  const gio = docGio(); // đã loại mục lỗi
-  const co = gio.length > 0;
-  document.getElementById("gioTrong").classList.toggle("d-none", co);
-  document.getElementById("gioCo").classList.toggle("d-none", !co);
-  if (!co) return;
-
-  document.getElementById("dongGio").innerHTML = gio.map(function (c) {
-    const p = timSanPham(c.id);
-    return (
-      "<tr>" +
-        '<td><div class="d-flex align-items-center gap-2">' +
-          '<img src="' + p.anh + '" alt="' + p.ten + '" class="anh-nho" onerror="' + ANH_LOI + '">' +
-          '<div><a class="fw-semibold text-decoration-none text-dark" href="chi-tiet.html?id=' + p.id + '">' + p.ten + "</a>" +
-          '<div class="small text-muted">' + p.hang + "</div></div></div></td>" +
-        '<td class="text-end d-none d-md-table-cell">' + tien(p.gia) + "</td>" +
-        '<td class="text-center text-nowrap"><div class="btn-group btn-group-sm" role="group" aria-label="Đổi số lượng">' +
-          '<button type="button" class="btn btn-outline-secondary" onclick="doiSL(' + p.id + ',-1)" aria-label="Giảm"' +
-            (c.sl <= 1 ? " disabled" : "") + ">−</button>" +
-          '<span class="btn btn-light disabled px-3">' + c.sl + "</span>" +
-          '<button type="button" class="btn btn-outline-secondary" onclick="doiSL(' + p.id + ',1)" aria-label="Tăng"' +
-            (c.sl >= 10 ? " disabled" : "") + ">+</button></div>" +
-          '<button type="button" class="btn btn-sm btn-outline-danger ms-1" onclick="xoaSP(' + p.id + ')" aria-label="Xoá ' + p.ten + '">' +
-          '<i class="fa-solid fa-trash"></i></button></td>' +
-        '<td class="text-end fw-semibold">' + tien(p.gia * c.sl) + "</td>" +
-      "</tr>"
-    );
-  }).join("");
-  document.getElementById("tongTien").textContent = tien(tongTien());
-  document.getElementById("tongSL").textContent = tongSoLuong();
-}
-function doiSL(id, d) { doiSoLuong(id, d); veGioHang(); }
-function xoaSP(id) { xoaKhoiGio(id); veGioHang(); }
-
-function khoiTaoTrangGioHang() {
-  veGioHang();
-  const u = nguoiDangNhap();
-  if (u) document.getElementById("dhTen").value = u.ten;
-
-  document.getElementById("nutXoaHet").addEventListener("click", function () {
-    if (confirm("Xoá toàn bộ giỏ hàng?")) { xoaHetGio(); veGioHang(); }
-  });
-
-  const form = document.getElementById("formDatHang");
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    if (!form.checkValidity()) { form.classList.add("was-validated"); return; }
-    xoaHetGio();
-    form.reset();
-    form.classList.remove("was-validated");
-    bootstrap.Modal.getOrCreateInstance(document.getElementById("modalDatHang")).hide();
-    veGioHang();
-    document.getElementById("thanhCong").classList.remove("d-none");
-  });
 }
 
 /* ---------- 6. TRANG LIÊN HỆ ---------- */
@@ -319,18 +248,37 @@ function khoiTaoTrangDangNhap() {
 document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("dauTrang").innerHTML = dungDauTrang();
   document.getElementById("chanTrang").innerHTML = dungChanTrang();
-  capNhatHuyHieu();
-
-  /* Giỏ đổi ở tab khác thì cập nhật huy hiệu ở tab này */
-  window.addEventListener("storage", function (e) {
-    if (e.key === KHOA_GIO) capNhatHuyHieu();
-  });
 
   const trang = document.body.dataset.trang;
   if (trang === "index") khoiTaoTrangChu();
   if (trang === "san-pham") khoiTaoTrangSanPham();
   if (trang === "chi-tiet") khoiTaoTrangChiTiet();
-  if (trang === "gio-hang") khoiTaoTrangGioHang();
   if (trang === "lien-he") khoiTaoTrangLienHe();
   if (trang === "dang-nhap") khoiTaoTrangDangNhap();
+});
+
+/* ---------- 9. HIỆU ỨNG: HIỆN KHI CUỘN, NÚT LÊN ĐẦU TRANG ---------- */
+document.addEventListener("DOMContentLoaded", function () {
+  if ("IntersectionObserver" in window) {
+    const quanSat = new IntersectionObserver(function (ds) {
+      ds.forEach(function (m) {
+        if (m.isIntersecting) { m.target.classList.add("da-hien"); quanSat.unobserve(m.target); }
+      });
+    }, { threshold: 0.15 });
+    document.querySelectorAll(".the-danh-muc, .o-uu-diem, .tieu-de-muc").forEach(function (el) {
+      const khung = el.classList.contains("the-danh-muc") ? el.parentElement : el;
+      khung.classList.add("cho-hien");
+      quanSat.observe(khung);
+    });
+  }
+
+  const nut = document.createElement("button");
+  nut.id = "nutLenDau";
+  nut.type = "button";
+  nut.className = "btn btn-warning p-0";
+  nut.setAttribute("aria-label", "Lên đầu trang");
+  nut.textContent = "↑";
+  document.body.appendChild(nut);
+  nut.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
+  window.addEventListener("scroll", function () { nut.classList.toggle("hien", window.scrollY > 300); }, { passive: true });
 });

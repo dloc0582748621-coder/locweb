@@ -139,3 +139,44 @@ h1, h2, h3, h4, h5, h6, .navbar-brand { color: var(--dark); }
   .hero .hinh-hero { font-size: 4.5rem; }
   .hero .hinh-hero .fa-laptop { font-size: 6rem; }
 }
+
+/* 11. Hiệu ứng */
+@keyframes truotLen { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+@keyframes bayNhe { 50% { transform: translateY(-12px); } }
+
+/* banner: chữ trượt lên lần lượt, biểu tượng bay nhẹ */
+.hero .col-lg-7 > * { animation: truotLen .7s ease both; }
+.hero .col-lg-7 > :nth-child(2) { animation-delay: .15s; }
+.hero .col-lg-7 > :nth-child(3) { animation-delay: .3s; }
+.hero .col-lg-7 > :nth-child(4) { animation-delay: .45s; }
+.hero .hinh-hero i { animation: bayNhe 3.5s ease-in-out infinite; }
+.hero .hinh-hero i + i { animation-delay: .8s; }
+
+/* thẻ sản phẩm hiện lần lượt (cả khi lọc, sắp xếp) */
+#spNoiBat > *, #luoiSP > *, #spLienQuan > * { animation: truotLen .5s ease both; }
+#spNoiBat > :nth-child(2), #luoiSP > :nth-child(4n+2), #spLienQuan > :nth-child(2) { animation-delay: .08s; }
+#spNoiBat > :nth-child(3), #luoiSP > :nth-child(4n+3), #spLienQuan > :nth-child(3) { animation-delay: .16s; }
+#spNoiBat > :nth-child(4), #luoiSP > :nth-child(4n), #spLienQuan > :nth-child(4) { animation-delay: .24s; }
+
+/* rê chuột: phóng ảnh, nút nhấc lên, biểu tượng xoay */
+.khung-anh { overflow: hidden; }
+.khung-anh img, .anh-lon img { transition: transform .35s; }
+.the-sp:hover .khung-anh img, .anh-lon:hover img { transform: scale(1.08); }
+.btn { transition: transform .2s, box-shadow .2s, background-color .2s; }
+.btn:not(.disabled):hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,.15); }
+.o-uu-diem i { transition: transform .5s; }
+.o-uu-diem:hover i { transform: rotateY(360deg); }
+
+/* hiện dần khi cuộn tới */
+.cho-hien { opacity: 0; transform: translateY(32px); transition: opacity .6s, transform .6s; }
+.cho-hien.da-hien { opacity: 1; transform: none; }
+
+/* nút lên đầu trang */
+#nutLenDau { position: fixed; right: 20px; bottom: 20px; width: 44px; height: 44px; border-radius: 50%;
+  opacity: 0; visibility: hidden; transition: opacity .3s, visibility .3s; z-index: 1030; }
+#nutLenDau.hien { opacity: 1; visibility: visible; }
+
+/* tôn trọng người dùng tắt chuyển động */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
